@@ -86,6 +86,7 @@
 
 11. Add helm repo
 `helm repo add <REPO-NAME> <URL-OF-REPO>`
+After this update local repo index - `helm repo update`
 
 ## Helm Hooks
  - Helm hooks are a way to execute actions at certain points during the Helm chart lifecycle. 
