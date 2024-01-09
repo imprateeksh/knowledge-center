@@ -84,6 +84,9 @@
 10. View Helm Values for a Release:
 `helm get values <RELEASE_NAME>`
 
+11. Add helm repo
+`helm repo add <REPO-NAME> <URL-OF-REPO>`
+
 ## Helm Hooks
  - Helm hooks are a way to execute actions at certain points during the Helm chart lifecycle. 
  - They allow us to run custom scripts or commands before or after specific events, such as before installing a chart, after upgrading, or before deleting resources.
