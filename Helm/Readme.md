@@ -1,6 +1,12 @@
 # HELM CHARTS
 ![image](https://github.com/imprateeksh/knowledge-center/assets/78964991/6d4ae1ed-13da-485c-b265-a89003f4151e)
 
+![image](https://github.com/imprateeksh/knowledge-center/assets/78964991/9b901498-75c8-4e66-b2e6-cf790ccf7475)
+
+ - A chart is a collection of files organized in a specific directory structure
+   - The configuration information related to a chart is managed in the configuration
+   - A running instance of a chart with a specific config is called a release
+ 
  - Helm history
    - Originally created by DeisLabs and donated to CNCF
    - Goal is to help manage k8s manifests in an easier fashion
@@ -22,7 +28,7 @@
 ## Helm2 Vs Helm3
  - Mainly removal of Tiller
    ![image](https://github.com/imprateeksh/knowledge-center/assets/78964991/30386b4f-2ef8-4888-af56-d2fc58493cac)
-
+ - No more `helm init` is required to be executed now.
 
 ## Helm Chart Architecture:
 ![image](https://github.com/imprateeksh/knowledge-center/assets/78964991/1c854bda-7c60-4d29-bd9b-42c571c2e7e4)
