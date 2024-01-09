@@ -108,6 +108,18 @@ mychart/
 
 ```
 ### Helm Hook Example 1 - Pre-install Hook
+```yaml 
+apiVersion: v1
+kind: Pod  # <-- This is the Kubernetes resource kind
+metadata:
+  name: example-pod
+  annotations:
+    "helm.sh/hook": pre-install
+spec:
+  containers:
+  - name: example-container
+    image: nginx:latest
+```
  - `pre-install-message` is the name of the hook.
  - `helm.sh/hook-weight` is used to set the priority of the hook execution.
  - The events field specifies that the hook should run before installation.
