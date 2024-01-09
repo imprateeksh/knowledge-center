@@ -78,6 +78,78 @@
 10. View Helm Values for a Release:
 `helm get values <RELEASE_NAME>`
 
+## Helm Hooks
+ - Helm hooks are a way to execute actions at certain points during the Helm chart lifecycle. 
+ - They allow us to run custom scripts or commands before or after specific events, such as before installing a chart, after upgrading, or before deleting resources.
+ - Helm hooks provide a mechanism for extending the functionality of Helm charts.
+ - Hook Kind: The kind for Helm hooks is typically set to a Kubernetes resource kind like Job, Pod, Service, etc., depending on the nature of the hook.
+ - Annotations: Helm uses annotations to identify hooks. For instance, In the below mentioned examples - the "helm.sh/hook-weight" annotation helps determine the order in which hooks should be executed.
+ - Placement in directory structure: Helm hooks are usually defined in separate YAML files under the hooks directory in the Helm chart. The files can have any name, as long as they end with .yaml or .yml. The Helm chart structure might look like this:<br>
+```
+mychart/
+├── charts/
+├── hooks/
+│   ├── pre-install.yaml
+│   ├── post-upgrade.yaml
+│   └── pre-delete.yaml
+├── templates/
+├── values.yaml
+└── Chart.yaml
+
+```
+### Helm Hook Example 1 - Pre-install Hook
+ - `pre-install-message` is the name of the hook.
+ - `helm.sh/hook-weight` is used to set the priority of the hook execution.
+ - The events field specifies that the hook should run before installation.
+ - The command field contains the script to be executed.
+
+```yaml
+apiVersion: v2
+kind: Hook
+name: pre-install-message
+metadata:
+  annotations:
+    "helm.sh/hook-weight": "1"
+hooks:
+  - events: ["pre-install"]
+    command: ["/bin/sh", "-c", "echo 'Executing pre-install hook...'"]
+
+```
+### Helm Hook Example 2 - Post Upgrade Hook
+ - `post-upgrade-restart-pod` is the name of the hook.
+ - The hook runs after the upgrade event.
+ - The command field contains the script to delete a pod, triggering a restart.
+
+```yaml
+apiVersion: v2
+kind: Hook
+name: post-upgrade-restart-pod
+metadata:
+  annotations:
+    "helm.sh/hook-weight": "2"
+hooks:
+  - events: ["post-upgrade"]
+    command: ["/bin/sh", "-c", "kubectl delete pod my-pod"]
+
+```
+
+### Helm Hook Example 3 - Pre-delete Hook
+ - `pre-delete-cleanup` is the name of the hook.
+ - The hook runs before the deletion event.
+ - The command field contains the script to execute cleanup tasks.
+```yaml
+apiVersion: v2
+kind: Hook
+name: pre-delete-cleanup
+metadata:
+  annotations:
+    "helm.sh/hook-weight": "3"
+hooks:
+  - events: ["pre-delete"]
+    command: ["/bin/sh", "-c", "echo 'Performing pre-delete cleanup...'"]
+
+```
+
 ## Best Practices
 ### Value Files
  - Lower case names are preferred
@@ -91,6 +163,7 @@
  - Follow standard helm directory structure
  - Use Semantic Versioning (SemVer) for chart versioning.
  - Documentation- Include a well documented Readme.md with details on usage, values and dependencies.
+ - Excessive or poorly designed hooks can complicate chart management.
  - Leverage Helm templates to generate Kubernetes manifests.
  - Keep templates simple; avoid complex logic. Use helper functions for clarity.
  - Use conditionals for optional dependencies based on user choices
