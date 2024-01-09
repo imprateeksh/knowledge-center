@@ -120,6 +120,8 @@ spec:
   - name: example-container
     image: nginx:latest
 ```
+"helm.sh/hook": pre-install to specify that this is a pre-installation hook.
+
  - `pre-install-message` is the name of the hook.
  - `helm.sh/hook-weight` is used to set the priority of the hook execution.
  - The events field specifies that the hook should run before installation.
